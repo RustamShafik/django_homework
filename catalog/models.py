@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -56,6 +57,12 @@ class Product(models.Model):
         null=True,
         blank=True,
         related_name="products",
+    )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='products',
+        verbose_name='Владелец',
     )
     purchase_price = models.DecimalField(
         max_digits=10,
