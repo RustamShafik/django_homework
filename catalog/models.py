@@ -28,6 +28,13 @@ class Product(models.Model):
         verbose_name="Наименование",
         help_text="Введите наименование продукта",
     )
+
+    published = models.BooleanField(
+        default=False,
+        verbose_name="Статус публикации продукта",
+        help_text="Отметьте, если продукт опубликован",
+    )
+
     description = models.TextField(
         verbose_name="Описание продукта",
         help_text="Введите описание продукта",
@@ -75,3 +82,6 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
+        permissions = [
+            ("can_unpublish_product", "Может отменять публикацию продукта"),
+        ]

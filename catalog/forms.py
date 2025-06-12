@@ -35,3 +35,8 @@ class ProductForm(forms.ModelForm):
             if word.lower() in product_description.lower():
                 self.add_error('description', 'Это слово использовать нельзя')
 
+class ProductModeratorForm(ProductForm):
+    class Meta(ProductForm.Meta):
+        fields = ['name', 'published', 'photo', 'description', 'category', 'purchase_price']
+
+

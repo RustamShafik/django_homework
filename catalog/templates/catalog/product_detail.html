@@ -18,6 +18,9 @@
                             <div class="btn-group">
                                 <a class="btn btn-primary" href="{% url 'catalog:products_list' %}" role="button">Назад</a>
                                 <a class="btn btn-primary" href="{% url 'catalog:product_update' product.pk %}" role="button">Изменить</a>
+                                {% if perms.catalog.delete_product %}
+                                <a href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-danger">Удалить продукт</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
