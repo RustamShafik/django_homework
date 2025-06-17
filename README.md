@@ -87,6 +87,7 @@ python manage.py runserver
 - Python 3.12
 - Django 5.2
 - Bootstrap 5
+- Redis
 
 ---
 
