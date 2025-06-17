@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from catalog.models import Product
+from .services import ProductService, get_products_from_cache
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
@@ -14,6 +15,9 @@ class ContactsView(TemplateView):
 
 class ProductListView(ListView):
     model = Product
+
+    def get_queryset(self):
+        return get_products_from_cache()
 
 class ProductDetailView(DetailView):
     model = Product
@@ -59,6 +63,15 @@ class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
         obj = self.get_object()
         user = self.request.user
         return obj.owner == user or user.has_perm(self.permission_required)
+
+class ProductByCategoryView(ListView):
+    model = Product
+    template_name = "catalog/products_by_category.html"
+    context_object_name = "products"
+
+    def get_queryset(self):
+        category_id = self.kwargs.get("category_id")
+        return ProductService.get_products_list_by_category(category_id)
 
 
 # def product_detail(request, pk):
