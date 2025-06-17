@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from catalog.models import Product
-from .services import ProductService
+from .services import ProductService, get_products_from_cache
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
@@ -15,6 +15,9 @@ class ContactsView(TemplateView):
 
 class ProductListView(ListView):
     model = Product
+
+    def get_queryset(self):
+        return get_products_from_cache()
 
 class ProductDetailView(DetailView):
     model = Product
